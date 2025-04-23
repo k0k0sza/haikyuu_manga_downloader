@@ -5,6 +5,8 @@ import os.path as path
 import os
 from PIL import Image
 import time
+import PyPDF2
+import sys
 
 start_time = time.perf_counter()
 def convert(img):
@@ -40,11 +42,20 @@ def save_as_pdf(files=None, out='images.pdf'):
 def savendel():
     out1 = str(num)+".pdf"
     save_as_pdf(files=imgs, out=out1)
-
+2
     print("SAVE PDF ")
     for img in imgs:
         os.remove(img) 
     print("DELETED")
+
+def merge():
+    merger = PyPDF2.PdfMerger()
+
+    for file in os.listdir(os.curdir):
+        if file.endswith(".pdf"):
+            merger.append(file)
+    merger.write(str(num1)+"-"+str(num2)+".pdf")
+
 
 
 url1 = "https://w1.readhaikyu.online/manga/haikyuu-chapter-"
@@ -81,6 +92,6 @@ for num in range(num1,num2+1):
 end_time = time.perf_counter()
 
 elapsed_time = end_time - start_time
-
+merge()
 print(f"Elapsed time: {elapsed_time:.1f} seconds")
     
